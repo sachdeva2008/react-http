@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './FullPost.css';
 
+
 class FullPost extends Component {
   state = {
     loadedData : null,
@@ -47,7 +48,7 @@ deleteDataHandler = () => {
                       <button onClick={this.deleteDataHandler} className="Delete">Delete</button>
                   </div>
               </div>
-
+            
           );
         }
 

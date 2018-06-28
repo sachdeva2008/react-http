@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import Post from '../../../components/Post/Post';
-
+import {Link} from 'react-router-dom';
 class Posts extends Component{
 
   state = {
@@ -31,7 +31,10 @@ class Posts extends Component{
 
   render(){
     const posts = this.state.posts.map(post => {
-      return <Post key={post.id} title={post.title} Author={post.Author} Clicked = {() => this.postSelectedHandler(post.id)}/>
+      return (<Link to={'/'+post.id} key={post.id}><Post
+
+                title={post.title}
+                Author={post.Author} Clicked = {() => this.postSelectedHandler(post.id)}/> </Link>);
     });
     return(
       <section className='posts'>
