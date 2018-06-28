@@ -1,40 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import {Route} from 'react-router-dom';
+
 import './Blog.css';
+
+import Posts from './Posts/Posts';
 
 class Blog extends Component {
 
-  state = {
-    posts : [],
-    selectedId : null
-  }
-
-  componentDidMount(){
-        axios.get('/posts')
-        .then(response=>{
-          const posts = response.data.slice(0,4);
-          const updatedPosts = posts.map(posts=> {
-            return {
-              ...posts,
-              Author:'Max'
-            }
-          });
-
-            this.setState({posts:updatedPosts});
-          //console.log(response);
-        });
-
-    }
-
-    postSelectedHandler = (id) => {
-      this.setState({ selectedId : id});
-    }
-
-    render () {
-      const posts = this.state.posts.map(post => {
-        return <Post key={post.id} title={post.title} Author={post.Author} Clicked = {() => this.postSelectedHandler(post.id)}/>
-      });
+  render () {
         return (
             <div>
               <header>
@@ -45,16 +20,8 @@ class Blog extends Component {
                   </ul>
                 </nav>
               </header>
-                <section className="Posts">
-                    {posts}
+              <Route path='/' exact render={() => <h1>Home</h1>} />
 
-                </section>
-                <section>
-                    <FullPost id = {this.state.selectedId}/>
-                </section>
-                <section>
-                    <NewPost />
-                </section>
             </div>
         );
     }
