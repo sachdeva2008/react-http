@@ -8,10 +8,11 @@ class FullPost extends Component {
     loadedData : null,
     error : false
   }
-  componentDidUpdate (){
-    if(this.props.id){
+  componentDidMount (){
+    console.log(this.props.match.params.id);
+    if(this.props.match.params.id){
       if(!this.state.loadedData || (this.state.loadedData && this.state.loadedData.id !== this.props.id) ){
-      axios.get('https://jsonplaceholder.typicode.com/posts/'+this.props.id)
+      axios.get('https://jsonplaceholder.typicode.com/posts/'+this.props.match.params.id)
       .then(response=>{
           this.setState({loadedData:response.data});
       });
@@ -48,7 +49,7 @@ deleteDataHandler = () => {
                       <button onClick={this.deleteDataHandler} className="Delete">Delete</button>
                   </div>
               </div>
-            
+
           );
         }
 
