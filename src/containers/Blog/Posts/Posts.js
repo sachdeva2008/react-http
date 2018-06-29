@@ -1,14 +1,21 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import Post from '../../../components/Post/Post';
-import {Link} from 'react-router-dom';
+import {Route,Link} from 'react-router-dom';
+import FullPost from '../FullPost/FullPost';
+
 class Posts extends Component{
 
   state = {
     posts : []
   }
 
+  componentWillMount(){
+    //console.log(this.props);
+  }
+
   componentDidMount(){
+    //console.log(this.props);
           axios.get('/posts')
           .then(response=>{
             const posts = response.data.slice(0,4);
@@ -37,9 +44,12 @@ class Posts extends Component{
                 Author={post.Author} Clicked = {() => this.postSelectedHandler(post.id)}/> </Link>);
     });
     return(
-      <section className='posts'>
-        {posts}
-      </section>
+      <div>
+        <section className='posts'>
+          {posts}
+        </section>
+        <Route path='/:id' exact component={FullPost}/>
+      </div>
     );
   }
 }

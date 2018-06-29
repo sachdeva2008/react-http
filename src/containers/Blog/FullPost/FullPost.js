@@ -8,21 +8,33 @@ class FullPost extends Component {
     loadedData : null,
     error : false
   }
-  componentDidMount (){
-    console.log(this.props.match.params.id);
-    if(this.props.match.params.id){
-      if(!this.state.loadedData || (this.state.loadedData && this.state.loadedData.id !== this.props.id) ){
-      axios.get('https://jsonplaceholder.typicode.com/posts/'+this.props.match.params.id)
-      .then(response=>{
-          this.setState({loadedData:response.data});
-      });
 
+
+  componentDidMount (){
+    //console.log(this.props);
+    this.loadData();
+}
+
+componentDidUpdate(){
+    this.loadData();
+}
+
+loadData(){
+      if(this.props.match.params.id){
+        if(!this.state.loadedData || (this.state.loadedData && this.state.loadedData.id != this.props.match.params.id) ){
+        axios.get('https://jsonplaceholder.typicode.com/posts/'+this.props.match.params.id)
+        .then(response=>{
+            this.setState({loadedData:response.data});
+        }).catch(error=>{
+          console.log(error);
+        });
+
+      }
     }
-  }
 }
 
 deleteDataHandler = () => {
-  axios.delete('https://jsonplaceholder.typicode.com/posts/'+this.props.id)
+  axios.delete('https://jsonplaceholder.typicode.com/posts/'+this.props.match.params.id)
   .then(response=>{
       console.log(response);
   });
@@ -36,7 +48,7 @@ deleteDataHandler = () => {
         if(!this.state.error){
           <p>Something went wrong</p>
         }
-        if(this.props.id){
+        if(this.props.match.params.id){
           post = <p>Loading!!!!!</p>
         }
 
